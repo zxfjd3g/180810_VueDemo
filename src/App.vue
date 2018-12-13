@@ -1,8 +1,8 @@
 <template>
   <div class="todo-container">
     <div class="todo-wrap">
-      <TodoHeader/>
-      <List :todos="todos"/>
+      <TodoHeader :addTodo="addTodo"/>
+      <List :todos="todos" :deleteTodo="deleteTodo"/>
       <TodoFooter/>
     </div>
   </div>
@@ -25,12 +25,34 @@
       }
     },
 
+    methods: {
+      addTodo (todo) {
+        this.todos.unshift(todo)
+      },
+
+      // 删除指定的todo
+      deleteTodo (index) {
+        this.todos.splice(index, 1)
+      }
+    },
+
     components: {
       TodoHeader: Header,
       List,
       TodoFooter: Footer
     }
   }
+
+  /*function fn() {
+    console.log(this)
+  }
+  const obj = {}
+  const fn2 = fn.bind(obj)
+  fn2()
+
+  function xxx() {
+    fn.call(obj)
+  }*/
 </script>
 
 <style>
