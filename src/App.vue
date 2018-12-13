@@ -3,7 +3,7 @@
     <div class="todo-wrap">
       <TodoHeader :addTodo="addTodo"/>
       <List :todos="todos" :deleteTodo="deleteTodo"/>
-      <TodoFooter/>
+      <TodoFooter :todos="todos" :selectAllTodos="selectAllTodos" :clearCompleteTodos="clearCompleteTodos"/>
     </div>
   </div>
 </template>
@@ -13,15 +13,13 @@
   import List from './components/List.vue'
   import Footer from './components/Footer.vue'
 
+  import storageUtils from './utils/storageUtils'
+
   export default {
 
     data () {
       return {
-        todos: [
-          {complete: false, title: '吃饭'},
-          {complete: true, title: '睡觉'},
-          {complete: false, title: '打代码'},
-        ]
+        todos: storageUtils.readTodos()
       }
     },
 
@@ -33,6 +31,31 @@
       // 删除指定的todo
       deleteTodo (index) {
         this.todos.splice(index, 1)
+      },
+
+      // 对所有todo进行全选或全不选
+      selectAllTodos (isSelectAll) {
+        this.todos.forEach(todo => todo.complete = isSelectAll)
+      },
+
+      // 清除所有已完成的todo
+      clearCompleteTodos () {
+        this.todos = this.todos.filter(todo => !todo.complete)
+      }
+    },
+
+    watch: {
+      todos: {
+        deep: true, // 深度监视
+        /*handler: function (value) { // todos最新的值
+          // 将todos的json格式数据保存到local中
+          // localStorage.setItem('todos_key', JSON.stringify(value))
+          storageUtils.saveTodos(value)
+        }*/
+        handler: storageUtils.saveTodos
+        /*handler: function (todos) {
+          localStorage.setItem('todos_key', JSON.stringify(todos))
+        }*/
       }
     },
 
