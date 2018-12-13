@@ -13,7 +13,10 @@
   }
 </script>
 
-<style>
+<style scoped> /*只在当前组件及子组件有效*/
+  h2 {
+    font-size: 40px;
+  }
   .title {
     color: red;
   }

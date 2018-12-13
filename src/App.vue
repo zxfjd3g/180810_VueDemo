@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2>xxxxxxxxx</h2>
     <HelloWorld/>
     <hello-world/>
     <img src="./assets/logo.png" alt="logo" class="logo">
