@@ -1,62 +1,36 @@
 <template>
   <div>
-    <h2 v-if="!repoName">LOADING...</h2>
-    <p v-else>
-      most star repo is
-      <a :href="repoUrl">{{repoName}}</a>
-    </p>
+    <div class="row">
+      <div class="col-xs-offset-2 col-xs-8">
+        <div class="page-header"><h2>Router Basic - 01</h2></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-2 col-xs-offset-2">
+        <div class="list-group">
+          <!--在此生成路由链接-->
+          <router-link class="list-group-item" to="/about">About</router-link>
+          <router-link class="list-group-item" to="/home">Home</router-link>
+        </div>
+      </div>
+
+
+      <div class="col-xs-6">
+        <div class="panel">
+          <div class="panel-body">
+            <!--在此显示当前路由组件-->
+            <router-view/>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-  import axios from 'axios'
 
-  export default {
-    data () {
-      return {
-        repoUrl: '',
-        repoName: ''
-      }
-    },
-
-    async mounted () {
-      const url = 'https://api.github.com/search/repositories?q=vu&sort=stars'
-      // 使用vue-resource发送异步ajax请求
-      /*this.$http.get(url).then(response => {
-        // 处理成功
-        const result = response.data
-        const mostRepo = result.items[0]
-        this.repoUrl = mostRepo.html_url
-        this.repoName = mostRepo.name
-      }).catch(error => {
-        // 处理失败
-        alert('请求失败了')
-      })*/
-
-      // 使用axios发送异步ajax请求
-      /*axios.get(url).then(response => {
-        // 处理成功
-        const result = response.data
-        const mostRepo = result.items[0]
-        this.repoUrl = mostRepo.html_url
-        this.repoName = mostRepo.name
-      }).catch(error => {
-        // 处理失败
-        alert('请求失败了')
-      })*/
-
-      // const promise = axios.get(url)
-      try {
-        const response = await axios.get(url)
-        const result = response.data
-        const mostRepo = result.items[0]
-        this.repoUrl = mostRepo.html_url
-        this.repoName = mostRepo.name
-      } catch (error) {
-        alert('请求失败了')
-      }
-    }
-  }
+  export default {}
 
 </script>
 
