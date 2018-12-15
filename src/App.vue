@@ -1,14 +1,20 @@
 <template>
   <div class="todo-container">
     <div class="todo-wrap">
-      <TodoHeader :addTodo="addTodo"/>
-      <List :todos="todos" :deleteTodo="deleteTodo"/>
-      <TodoFooter :todos="todos" :selectAllTodos="selectAllTodos" :clearCompleteTodos="clearCompleteTodos"/>
+      <TodoHeader @addTodo="addTodo"/>
+      <List :todos="todos"/>
+      <TodoFooter>
+        <input type="checkbox" v-model="selectAll" slot="left"/>
+        <span slot="middle">已完成{{completeSize}}  / 全部{{todos.length}}</span>
+        <button class="btn btn-danger" v-show="completeSize>0" @click="clearCompleteTodos" slot="right">清除已完成任务</button>
+      </TodoFooter>
     </div>
   </div>
 </template>
 
 <script>
+  import PubSub from 'pubsub-js'
+  
   import Header from './components/Header.vue'
   import List from './components/List.vue'
   import Footer from './components/Footer.vue'
@@ -23,12 +29,32 @@
       }
     },
 
+    computed: {
+      // 完成的总数量
+      completeSize() {
+        return this.todos.reduce((pre, todo) => pre + (todo.complete ? 1 : 0), 0)
+      },
+      // 全选/全不选
+      selectAll: {
+        get() {
+          return this.todos.length === this.completeSize && this.completeSize>0
+        },
+        set(value) {// value存储的就是当前checkbox是否选中的值
+          this.selectAllTodos(value)
+        }
+      }
+    },
+
     mounted () {
       // 模拟异步读取数据
       setTimeout(function () {
         const todos = storageUtils.readTodos()
         this.todos = todos
       }.bind(this), 2000)
+      // 订阅消息: deleteTodo
+      PubSub.subscribe('deleteTodo', (msg, index) => {
+        this.deleteTodo(index)
+      })
     },
 
     methods: {
