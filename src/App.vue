@@ -19,8 +19,16 @@
 
     data () {
       return {
-        todos: storageUtils.readTodos()
+        todos: []
       }
+    },
+
+    mounted () {
+      // 模拟异步读取数据
+      setTimeout(function () {
+        const todos = storageUtils.readTodos()
+        this.todos = todos
+      }.bind(this), 2000)
     },
 
     methods: {
