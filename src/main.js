@@ -2,11 +2,13 @@
 入口JS
  */
 import Vue from 'vue'
-import {Button} from 'mint-ui'
-import App from './App.vue'
+import VueResource from 'vue-resource'
 
-// 注册全局组件(决定标签名, 所有组件中都可以直接使用)
-Vue.component(Button.name, Button)   // name: mt-button
+import App from './App2.vue'
+
+// 声明使用vue插件
+Vue.use(VueResource) // 内部给vm/所有组件对象添加了一个能发ajax请求的属性: $http.get()/post()
+
 
 new Vue({
   el: '#app',
