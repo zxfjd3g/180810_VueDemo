@@ -1,9 +1,14 @@
 <template>
-  <div>About</div>
+  <div>
+    <h2>About</h2>
+    <p>{{msg}}</p>
+  </div>
 </template>
 
 <script>
-  export default {}
+  export default {
+    props: ['msg']
+  }
 </script>
 
 <style scoped>

@@ -20,7 +20,7 @@
         <div class="panel">
           <div class="panel-body">
             <!--在此显示当前路由组件-->
-            <router-view/>
+            <router-view msg="abc"/>
           </div>
         </div>
       </div>
@@ -30,7 +30,9 @@
 
 <script>
 
-  export default {}
+  export default {
+
+  }
 
 </script>
 
