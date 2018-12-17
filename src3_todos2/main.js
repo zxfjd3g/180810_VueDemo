@@ -3,15 +3,13 @@
  */
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
 
-
+import './base.css'
 
 new Vue({
   el: '#app',
   components: {
     App
   },
-  template: '<App/>',
-  router, // 配置路由器
+  template: '<App/>'
 })
