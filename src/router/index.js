@@ -34,8 +34,9 @@ export default new VueRouter({ // 配置对象
           component: Messages,
           children: [
             {
+              name: 'message',
               path: '/home/messages/:id',
-              component: Message
+              component: Message,
             }
           ]
         },
