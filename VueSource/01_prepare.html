@@ -37,14 +37,79 @@
   const lis3 = Array.prototype.slice.call(lis)   // lis.slice(), 遍历伪数组中的所有数据保存一个新的数组并返回
   console.log(lis3 instanceof Array, lis3.forEach) // true function对象
 
-
-
-
   //2. node.nodeType: 得到节点类型
+  // <div id="test">尚硅谷IT教育</div>
+  const elementNode = document.getElementById('test')
+  const attrNode = elementNode.getAttributeNode('id')
+  const textNode = elementNode.firstChild   // textNode.textContent==='尚硅谷IT教育'
+  console.log(elementNode.nodeType, attrNode.nodeType, textNode.nodeType)
+
+
   //3. Object.defineProperty(obj, propertyName, {}): 给对象添加属性(指定描述符)
+  const p = {
+    firstName: 'A',
+    lastName: 'B',
+    xxx () {}
+  }
+  // 添加一个fullName属性
+  Object.defineProperty(p, 'fullName', { // 配置对象==> 属性描述符
+    // 数据描述符
+    configurable:false, // 是否可以重新define
+    enumerable: true, // 是否可以枚举(for..in / keys())
+    // value: 1, // 指定初始值
+    // writable: false, // value是否可以修改
+    // 存取描述符
+    get () {
+      return this.firstName + '-' + this.lastName
+    },
+    set (value) {
+      const names = value.split('-')
+      this.firstName = names[0]
+      this.lastName = names[1]
+    }
+  })
+  console.log(p.fullName)  // A-B
+  p.firstName = 'C'
+  p.lastName = 'D'
+  console.log(p.fullName)  // C-D
+  p.fullName = 'E-F'
+  console.log(p.firstName, p.lastName) // E F
+
   //4. Object.keys(obj): 得到对象自身可枚举属性组成的数组
+  const names = Object.keys(p)
+  console.log('names', names, p.toString)
   //5. obj.hasOwnProperty(prop): 判断prop是否是obj自身的属性
+  console.log(p.hasOwnProperty('xxx'), p.hasOwnProperty('toString')) // true, false
   //6. DocumentFragment: 文档碎片(高效批量更新多个节点)
+  // Fragment: 是内存中用来存储多个节点的容器(只存在于内存中, 不会进入页面)
+  /*
+  <div id="demo">
+    <ul>
+      <li>test1</li> -->atguigu
+      <li>test2</li>
+      <li>test3</li>
+    </ul>
+  </div>
+   */
+  // 创建一个空的frament容器对象
+  const fragment = document.createDocumentFragment()
+
+  // 取出div中所有子节点, 添加到fragment中
+  const div = document.getElementById('demo')
+  let child
+  while(child=div.firstChild) { // 一个节点只能有一个父节点
+    fragment.appendChild(child)  // 将child从div标签中移除, 将child节点添加为fragment的子节点
+  }
+
+  // 更新fragment中所有li
+  const lis4 = fragment.childNodes[1].children
+  Array.prototype.slice.call(lis4).forEach(li => {
+    li.textContent = 'atguigu'  // 不会更新界面
+  })
+
+  // 将fragment添加为div的子节点
+  div.appendChild(fragment)  // 批量更新
+
 </script>
 </body>
 </html>
