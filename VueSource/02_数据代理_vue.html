@@ -5,7 +5,22 @@
   <title>02_数据代理_vue</title>
 </head>
 <body>
+<div id="test"></div>
+<script type="text/javascript" src="./js/vue.js"></script>
+<script type="text/javascript">
+  const vm = new Vue({
+    el: '#test',
+    data: {
+      name: 'xiaoming'
+    }
+  })
+  console.log(vm.name)  // xiaoming   // vm代理对data中属性数据的读操作
 
+  // vm._data.name = 'xiaohong'
+  vm.name = 'xiaohong'  // 数据最终保存到了data对象的name属性上   代理写
+  console.log(vm._data.name, vm.name) // xiaohong
+  console.log(vm)
 
+</script>
 </body>
 </html>
