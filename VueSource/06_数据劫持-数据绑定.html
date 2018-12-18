@@ -10,6 +10,48 @@
   -->
 </head>
 <body>
+
+<!--
+dep
+   包含的属性:
+	id: 0/1/2/3
+	subs: [watcher, watcher]
+   与data中属性一一对应
+   dep关联哪些watcher?: 哪些表达式用到dep对应的属性, 如果多个表达式用于同一个属性==>对应多个watcher
+
+watcher
+   与模板中表达式(事件指令除外)一一对应
+   watcher关联哪些dep? 表达式中用于哪些属性, 如果表达式是一个多层的表达式==>对应多个dep
+-->
+
+<div id="test">
+  <p>{{name}}</p>
+  <p v-text="name"></p>
+  <p v-text="wife.name"></p>
+  <button v-on:click="update">更新</button>
+</div>
+
+<script type="text/javascript" src="./js/mvvm/compile.js"></script>
+<script type="text/javascript" src="./js/mvvm/mvvm.js"></script>
+<script type="text/javascript" src="./js/mvvm/observer.js"></script>
+<script type="text/javascript" src="./js/mvvm/watcher.js"></script>
+<script type="text/javascript">
+  new MVVM({
+    el: '#test',
+    data: {
+      name: 'A',
+      wife: {
+        name: 'B',
+        age: 12
+      }
+    },
+    methods: {
+      update () {
+        this.name = 'B'
+      }
+    }
+  })
+</script>
 </body>
 
 </html>
