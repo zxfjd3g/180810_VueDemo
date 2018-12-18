@@ -160,7 +160,9 @@ var compileUtil = {
     // 执行更新函数初始更新节点 ===> 实现初始化显示
     updaterFn && updaterFn(node, this._getVMVal(vm, exp));
 
-    new Watcher(vm, exp, function (value, oldValue) {
+    // 为当前编译表达式创建一个对应的watcher
+    new Watcher(vm, exp, function (value, oldValue) { // 指定用于更新节点的回调函数
+      // 调用updater对象更新函数去更新节点
       updaterFn && updaterFn(node, value, oldValue);
     });
   },

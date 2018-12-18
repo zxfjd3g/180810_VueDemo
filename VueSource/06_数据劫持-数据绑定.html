@@ -22,6 +22,14 @@ dep
 watcher
    与模板中表达式(事件指令除外)一一对应
    watcher关联哪些dep? 表达式中用于哪些属性, 如果表达式是一个多层的表达式==>对应多个dep
+
+
+this.name = 'B' ===> 更新data中name属性值
+		===> 调用对应的setter
+		===> dep.notify()
+		===> 调用相关的所有watcher的update()
+		===> 调用用于更新节点的回调函数cb()
+		===> updater.xxxUpdater()更新节点
 -->
 
 <div id="test">

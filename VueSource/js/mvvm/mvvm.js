@@ -14,6 +14,7 @@ function MVVM(options) {
     me._proxy(key);
   });
 
+  // 监视/劫持data中所有层次的属性
   observe(data, this);
 
   // 创建一个编译对象(内部编译模板==> 实现初始化显示)
