@@ -3,7 +3,9 @@
  */
 import Vue from 'vue'
 import App from './App.vue'
-import store from './store'
+import router from './router'
+
+
 
 new Vue({
   el: '#app',
@@ -11,5 +13,5 @@ new Vue({
     App
   },
   template: '<App/>',
-  store, //  配置vuex的store, 所有组件对象都多了一个属性: $store
+  router, // 配置路由器
 })
